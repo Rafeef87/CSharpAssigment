@@ -5,7 +5,7 @@ namespace Business.Factories;
 //A menu item that creates a contact.
 public class ContactFactory
 {
-    public static Contact Create(Contact form)
+    public static Contact Add(Contact form)
     {
         return new Contact()
         {

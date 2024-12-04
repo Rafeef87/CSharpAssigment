@@ -6,12 +6,12 @@ namespace Business.Services;
 public class ContactService
 {
     private List<Contact> _contacts = [];
-    //Create a Contact
-    public void CreateContact(Contact contact)
+    //Add a Contact
+    public void Add(Contact contact)
     {
         _contacts.Add(contact);
     }
-    public IEnumerable<Contact> GetContacts()
+    public List<Contact> GetAllContacts()
     {
         return _contacts;
     }
