@@ -11,9 +11,11 @@ public class ContactService
     public void Add(Contact contact)
     {
         _contacts.Add(contact);
+        _fileService.SaveListToFlie(_contacts);
     }
     public List<Contact> GetAllContacts()
     {
+        _contacts = _fileService.LoadListFromFile();
         return _contacts;
     }
 }
