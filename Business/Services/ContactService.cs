@@ -6,6 +6,7 @@ namespace Business.Services;
 public class ContactService
 {
     private List<Contact> _contacts = [];
+    private readonly FileService _fileService = new();
     //Add a Contact
     public void Add(Contact contact)
     {
