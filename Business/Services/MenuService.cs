@@ -49,7 +49,7 @@ public class MenuService
     {
         Console.Clear();
         //Add an item
-        var contact = new Contact();
+        var contact = new ContactRegistrationForm();
 
         Console.Write("ENTER YOUR FIRST NAME: ");
         contact.FirstName = Console.ReadLine()!;

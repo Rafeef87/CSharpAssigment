@@ -1,6 +1,8 @@
-﻿
+﻿using Business.Converters;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+
 
 namespace Business.Models;
 //Create a file service
@@ -19,17 +21,14 @@ public class FileService
     }
     public void SaveListToFlie(List<Contact> list)
     {
-        try
-        {
-            if (!Directory.Exists(_directoryPath))
-                Directory.CreateDirectory(_directoryPath);
-            var json = JsonSerializer.Serialize(list, _jsonSerializerOptions);
+
+        if (!Directory.Exists(_directoryPath)) 
+        { 
+            Directory.CreateDirectory(_directoryPath);
+        }
+            var json = JsonContactConverter.ConvertToJson(list);
             File.WriteAllText(_filePath, json);
-        }
-        catch (Exception ex) 
-        {
-            Debug.WriteLine(ex.Message);
-        }
+
     }
     public List<Contact> LoadListFromFile()
     {
@@ -39,8 +38,8 @@ public class FileService
                 return [];
 
             var json = File.ReadAllText(_filePath);
-            var list = JsonSerializer.Deserialize<List<Contact>>(json, _jsonSerializerOptions);
-            return list ?? [];
+            var list = JsonContactConverter.ConvertToList(json);
+            return list;
         }
         catch (Exception ex)
         {
