@@ -1,30 +1,60 @@
 ﻿using System.Diagnostics;
+using Business.Converters;
 using Business.Factories;
+using Business.Interfaces;
 using Business.Models;
 
 namespace Business.Services;
 //Create a list of Contacts
-public class ContactService
+public class ContactService : IContactService
 {
-    private readonly List<Contact> _contacts = [];
-    private readonly FileService _fileService = new();
-    //Add a Contact
-    public void Add(ContactRegistrationForm form)
+    
+    private readonly IFileService _fileService;
+    private List<Contact> _contacts = new List<Contact>();
+
+    public ContactService(IFileService fileService)
+    {
+        _fileService = fileService;
+    }
+    // Add a contact and save to file
+    public bool CreateContact(ContactRegistrationForm form)
     {
         try
         {
             var contact = ContactFactory.Create(form);
             _contacts.Add(contact);
-            _fileService.SaveListToFlie(_contacts);
+            // Convert the contact list to JSON and save it to the file
+            var json = JsonContactConverter.ConvertToJson(_contacts);
+            _fileService.SaveContactToFile(json);
+            return true;
         }
-        catch (Exception ex)
+        catch 
         {
-            Debug.WriteLine(ex.Message);
+            return false;
         }
     }
-    public List<Contact> GetAllContacts()
+    public IEnumerable<Contact> GetContacts()
     {
-        var contacts = _fileService.LoadListFromFile();
-        return contacts;
+        try
+        {
+
+            var json = _fileService.GetAllListFromFile();
+             _contacts = JsonContactConverter.ConvertToList(json);
+            return _contacts;
+        }
+        catch
+        {
+            return new List<Contact>();
+        }
+    }
+    //Add a Contact
+    public bool Add(ContactRegistrationForm form)
+    {
+        return CreateContact(form);
+    }
+
+    public IEnumerable<Contact> GetAllContacts()
+    {
+        return _contacts;
     }
 }

@@ -4,7 +4,7 @@ namespace Business.Services;
 //Build the main menu
 public class MenuService
 {
-    private readonly ContactService _contacts = new();
+    private readonly ContactService? _contacts;
 
     //Show Menu
 
@@ -72,7 +72,7 @@ public class MenuService
         Console.Write("ENTER YOUR LOCALITY: ");
         contact.Locality = Console.ReadLine()!;
 
-        _contacts.Add(contact);
+        _contacts.CreateContact(contact);
     }
 
     //View all items
@@ -80,7 +80,7 @@ public class MenuService
     {
         Console.Clear();
         Console.WriteLine("-------- ALL CONTACTS -------");
-        var contacts = _contacts.GetAllContacts();
+        var contacts = _contacts.GetContacts();
         if (!contacts.Any())
         {
             Console.WriteLine("NO CONTACT FOUND. PRESS ANY KEY TO GO BACK");

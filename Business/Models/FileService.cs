@@ -39,7 +39,7 @@ public class FileService
 
             var json = File.ReadAllText(_filePath);
             var list = JsonContactConverter.ConvertToList(json);
-            return list;
+            return list ?? [];
         }
         catch (Exception ex)
         {
