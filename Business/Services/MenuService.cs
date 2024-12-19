@@ -6,10 +6,9 @@ namespace Business.Services;
 //Build the main menu
 public class MenuService(IContactService contactService)
 {
-    private readonly IContactService _contactService = contactService;
+    private  IContactService _contactService = contactService;
 
     //Show Menu
-
     public void ShowMenu()
     {
         var isRunning = true;
@@ -47,10 +46,8 @@ public class MenuService(IContactService contactService)
 
         } while (isRunning);      
     }
-    public void CreateContactDialog()
+    public  void CreateContactDialog()
     {
-        
-
         Console.Clear();
         //Add an item
         ContactRegistrationForm contactRegistrationForm = ContactFactory.Create() ;
@@ -80,7 +77,7 @@ public class MenuService(IContactService contactService)
     }
 
     //View all items
-    public void ViewAllContactDialog()
+    public  void ViewAllContactDialog()
     {
         Console.Clear();
         Console.WriteLine("-------- ALL CONTACTS -------");
