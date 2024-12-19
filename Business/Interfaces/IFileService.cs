@@ -5,7 +5,7 @@ namespace Business.Interfaces;
 
 public interface IFileService
 {
-    void SaveContactToFile(List<Contact> list);
+    bool SaveContactToFile(List<Contact> list);
     List<Contact> LoadListFromFile();
 
 }

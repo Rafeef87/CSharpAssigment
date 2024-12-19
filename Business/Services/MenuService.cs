@@ -76,7 +76,7 @@ public class MenuService(IContactService contactService)
         Console.Write("ENTER YOUR LOCALITY: ");
         contactRegistrationForm.Locality = Console.ReadLine()!;
 
-        _contactService.Add(contactRegistrationForm);
+        _contactService.AddContact(contactRegistrationForm);
     }
 
     //View all items

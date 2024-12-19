@@ -18,15 +18,20 @@ public class FileService : IFileService
         _jsonSerializerOptions = new JsonSerializerOptions();
     }
 
-    public void SaveContactToFile(List<Contact> list)
+    public bool SaveContactToFile(List<Contact> list)
     {
-
-        if (!Directory.Exists(_directoryPath))
+        try
         {
-            Directory.CreateDirectory(_directoryPath);
+            var json = JsonContactConverter.ConvertToJson(list);
+            File.WriteAllText(_filePath, json);
+            return true;
         }
-        var json = JsonContactConverter.ConvertToJson(list);
-        File.WriteAllText(_filePath, json);
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return false;
+        }
+
     }
 
     public List<Contact> LoadListFromFile()

@@ -1,4 +1,5 @@
 ﻿
+using Business.Factories;
 using Business.Interfaces;
 using Business.Models;
 using Business.Services;
@@ -13,7 +14,11 @@ public class ContactService_Test
 
     public ContactService_Test()
     {
+        // Mock IFileService
         _fileServiceMock = new Mock<IFileService>();
+        // Mock LoadListFromFile för att returnera en tom lista vid initialisering
+        _fileServiceMock.Setup(fs => fs.LoadListFromFile()).Returns(new List<Contact>());
+        // Skapa ContactService med den mockade IFileService
         _contactService = new ContactService(_fileServiceMock.Object);
     }
     [Fact]
@@ -30,17 +35,19 @@ public class ContactService_Test
             ZipCode = "12345",
             Locality = "Cityville"
         };
+        // Mock SaveContactToFile to return true (save to file)
         _fileServiceMock
             .Setup(fs => fs.SaveContactToFile(It.IsAny<List<Contact>>()))
-            .Verifiable();// Just verifying that this method is called
+            .Returns(true);
 
         //Act 
-         _contactService.Add(contactRegistrationForm);// This will call CreateContact
+         _contactService.AddContact(contactRegistrationForm);// This will call CreateContact
 
         //Assert
         _fileServiceMock.Verify(fs => fs.SaveContactToFile(It.IsAny<List<Contact>>()), Times.Once);// Verify that SaveContactToFile was called once
         // Verify that the contact has been added to the internal list of contacts
         var contacts = _contactService.GetAllContacts();// Assuming you have this getter in ContactService
+
         Assert.Equal("Rafeef", contacts.First().FirstName);
         Assert.Equal("Khalifa", contacts.First().LastName);
         Assert.Equal("rafeef@domin.com", contacts.First().Email);

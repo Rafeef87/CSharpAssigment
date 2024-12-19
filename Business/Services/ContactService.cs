@@ -8,16 +8,20 @@ using Business.Models;
 namespace Business.Services;
 
 //Use Dependency Injection
-public class ContactService(IFileService fileService) : IContactService
+public class ContactService : IContactService
 {
     
-    private readonly IFileService _fileService = fileService;
+    private readonly IFileService _fileService;
     //Create a list of Contacts
     private List<Contact> _contacts = new List<Contact>();
-
+    public ContactService(IFileService fileService)
+    {  
+        _fileService = fileService;
+        _contacts = _fileService.LoadListFromFile();
+    }
 
     // Add a contact and save to file
-    public void Add(ContactRegistrationForm form)
+    public bool AddContact(ContactRegistrationForm form)
     {
         try
         {
@@ -25,14 +29,14 @@ public class ContactService(IFileService fileService) : IContactService
 
             _contacts.Add(contact);
             // Convert the contact list to JSON and save it to the file
-            JsonContactConverter.ConvertToJson(_contacts);
-            // Convert the contact list to JSON and save it to the file
             _fileService.SaveContactToFile(_contacts);
+            return true;
           
         }
         catch (Exception ex) 
         {
            Debug.WriteLine(ex.Message);
+            return false;
         }
     }
 
