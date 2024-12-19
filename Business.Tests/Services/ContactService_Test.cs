@@ -1,4 +1,5 @@
 ﻿
+using System.Reflection.Emit;
 using Business.Factories;
 using Business.Interfaces;
 using Business.Models;
@@ -81,9 +82,48 @@ public class ContactService_Test
             .Returns(false);
 
         //Act 
-        _contactServiceFalse.AddContact(contactRegistrationForm);// This will call CreateContact
+        _contactServiceFalse.AddContact(contactRegistrationForm);
 
         //Assert
         _fileServiceFalseMock.Verify(fs => fs.SaveContactToFile(It.IsAny<List<Contact>>()), Times.Never);// Verify that SaveContactToFile was not called once
     }
+    [Fact]
+    public void GetAllContacts_ShouldReturenAllContacts()
+    {
+        //Arrange
+        var expectedContacts = new List<Contact>
+        { 
+            new Contact
+        {
+            FirstName = "Rafeef",
+            LastName = "Khalifa",
+            Email = "rafeef@domin.com",
+            PhoneNumber = "1234567890",
+            StreetAddress = "123 Main st",
+            ZipCode = "12345",
+            Locality = "Cityville"
+        },
+              new Contact
+        {
+            FirstName = "Adnan",
+            LastName = "Al Kharfan",
+            Email = "rafeef@domin.com",
+            PhoneNumber = "1234567890",
+            StreetAddress = "123 Main st",
+            ZipCode = "12345",
+            Locality = "Cityville"
+        }
+        };
+        // Mock SaveContactToFile to return true (save to file)
+        _fileServiceMock
+            .Setup(fs => fs.LoadListFromFile())
+            .Returns(expectedContacts);
+
+        //Act 
+        var contacts = _contactService.GetAllContacts();
+        //Assert
+        
+        Assert.Equal(2, contacts.Count());
+        Assert.Equal("Rafeef", contacts.First().FirstName);
     }
+}

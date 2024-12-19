@@ -42,15 +42,10 @@ public class ContactService : IContactService
 
     public IEnumerable<Contact> GetAllContacts()
     {
-        try
-        {
-            _contacts = _fileService.LoadListFromFile();
-            return _contacts;
-        }
-        catch
-        {
-            return new List<Contact>();
-        }
+       
+        var contacs = _fileService.LoadListFromFile();
+        return contacs;
+  
     }
   
 }
