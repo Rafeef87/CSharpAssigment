@@ -1,9 +1,11 @@
 ﻿
+using Business.Models;
+
 namespace Business.Interfaces;
 
 public interface IFileService
 {
-    bool SaveContactToFile(string contact);
-    string GetAllListFromFile();
+    void SaveContactToFile(List<Contact> list);
+    List<Contact> LoadListFromFile();
 
 }

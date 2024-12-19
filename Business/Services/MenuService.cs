@@ -1,10 +1,12 @@
-﻿using Business.Models;
+﻿using Business.Factories;
+using Business.Interfaces;
+using Business.Models;
 
 namespace Business.Services;
 //Build the main menu
-public class MenuService
+public class MenuService(IContactService contactService)
 {
-    private readonly ContactService? _contacts;
+    private readonly IContactService _contactService = contactService;
 
     //Show Menu
 
@@ -47,32 +49,34 @@ public class MenuService
     }
     public void CreateContactDialog()
     {
+        
+
         Console.Clear();
         //Add an item
-        var contact = new ContactRegistrationForm();
+        ContactRegistrationForm contactRegistrationForm = ContactFactory.Create() ;
 
         Console.Write("ENTER YOUR FIRST NAME: ");
-        contact.FirstName = Console.ReadLine()!;
+        contactRegistrationForm.FirstName = Console.ReadLine()!;
 
         Console.Write("ENTER YOUR LAST NAME: ");
-        contact.LastName = Console.ReadLine()!;
+        contactRegistrationForm.LastName = Console.ReadLine()!;
 
         Console.Write("ENTER YOUR EMAIL: ");
-        contact.Email = Console.ReadLine()!;
+        contactRegistrationForm.Email = Console.ReadLine()!;
 
         Console.Write("ENTER YOUR PHONE NUMBER: ");
-        contact.PhoneNumber = Console.ReadLine()!;
+        contactRegistrationForm.PhoneNumber = Console.ReadLine()!;
 
         Console.Write("ENTER YOUR STREER ADDRESS: ");
-        contact.StreetAddress = Console.ReadLine()!;
+        contactRegistrationForm.StreetAddress = Console.ReadLine()!;
 
         Console.Write("ENTER YOUR ZIP CODE: ");
-        contact.ZipCode = Console.ReadLine()!;
+        contactRegistrationForm.ZipCode = Console.ReadLine()!;
 
         Console.Write("ENTER YOUR LOCALITY: ");
-        contact.Locality = Console.ReadLine()!;
+        contactRegistrationForm.Locality = Console.ReadLine()!;
 
-        _contacts.CreateContact(contact);
+        _contactService.Add(contactRegistrationForm);
     }
 
     //View all items
@@ -80,7 +84,7 @@ public class MenuService
     {
         Console.Clear();
         Console.WriteLine("-------- ALL CONTACTS -------");
-        var contacts = _contacts.GetContacts();
+        IEnumerable<Contact> contacts = _contactService.GetAllContacts();
         if (!contacts.Any())
         {
             Console.WriteLine("NO CONTACT FOUND. PRESS ANY KEY TO GO BACK");

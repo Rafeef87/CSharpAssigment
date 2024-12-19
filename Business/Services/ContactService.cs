@@ -1,45 +1,46 @@
 ﻿using System.Diagnostics;
+using System.Text.Json.Serialization;
 using Business.Converters;
 using Business.Factories;
 using Business.Interfaces;
 using Business.Models;
 
 namespace Business.Services;
-//Create a list of Contacts
-public class ContactService : IContactService
+
+//Use Dependency Injection
+public class ContactService(IFileService fileService) : IContactService
 {
     
-    private readonly IFileService _fileService;
+    private readonly IFileService _fileService = fileService;
+    //Create a list of Contacts
     private List<Contact> _contacts = new List<Contact>();
 
-    public ContactService(IFileService fileService)
-    {
-        _fileService = fileService;
-    }
+
     // Add a contact and save to file
-    public bool CreateContact(ContactRegistrationForm form)
+    public void Add(ContactRegistrationForm form)
     {
         try
         {
             var contact = ContactFactory.Create(form);
+
             _contacts.Add(contact);
             // Convert the contact list to JSON and save it to the file
-            var json = JsonContactConverter.ConvertToJson(_contacts);
-            _fileService.SaveContactToFile(json);
-            return true;
+            JsonContactConverter.ConvertToJson(_contacts);
+            // Convert the contact list to JSON and save it to the file
+            _fileService.SaveContactToFile(_contacts);
+          
         }
-        catch 
+        catch (Exception ex) 
         {
-            return false;
+           Debug.WriteLine(ex.Message);
         }
     }
-    public IEnumerable<Contact> GetContacts()
+
+    public IEnumerable<Contact> GetAllContacts()
     {
         try
         {
-
-            var json = _fileService.GetAllListFromFile();
-             _contacts = JsonContactConverter.ConvertToList(json);
+            _contacts = _fileService.LoadListFromFile();
             return _contacts;
         }
         catch
@@ -47,14 +48,5 @@ public class ContactService : IContactService
             return new List<Contact>();
         }
     }
-    //Add a Contact
-    public bool Add(ContactRegistrationForm form)
-    {
-        return CreateContact(form);
-    }
-
-    public IEnumerable<Contact> GetAllContacts()
-    {
-        return _contacts;
-    }
+  
 }
