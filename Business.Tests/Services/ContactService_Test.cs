@@ -12,6 +12,8 @@ public class ContactService_Test
     private readonly Mock<IFileService> _fileServiceMock;
     private readonly IContactService _contactService;
 
+    private readonly Mock<IFileService> _fileServiceFalseMock;
+    private readonly IContactService _contactServiceFalse;
     public ContactService_Test()
     {
         // Mock IFileService
@@ -20,12 +22,15 @@ public class ContactService_Test
         _fileServiceMock.Setup(fs => fs.LoadListFromFile()).Returns(new List<Contact>());
         // Skapa ContactService med den mockade IFileService
         _contactService = new ContactService(_fileServiceMock.Object);
+
+        _fileServiceFalseMock = new Mock<IFileService>();
+        _contactServiceFalse = new ContactService(_fileServiceFalseMock.Object);
     }
     [Fact]
-    public void CreateContact_ShouldAddContactToList_AndSaveToFile()
+    public void AddContact_ShouldAddContactToList_AndSaveToFile()
     {
         //Arrange
-        var contactRegistrationForm = new ContactRegistrationForm
+        var contactRegistrationForm = new ContactRegistrationForm()
         {
             FirstName = "Rafeef",
             LastName = "Khalifa",
@@ -55,6 +60,30 @@ public class ContactService_Test
         Assert.Equal("123 Main st", contacts.First().StreetAddress);
         Assert.Equal("12345", contacts.First().ZipCode);
         Assert.Equal("Cityville", contacts.First().Locality);
-
     }
-}
+    [Fact]
+    public void Unsuccessful_AddContact()
+    {
+        //Arrange
+        var contactRegistrationForm = new ContactRegistrationForm()
+        {
+            FirstName = "Rafeef",
+            LastName = "Khalifa",
+            Email = "rafeef@domin.com",
+            PhoneNumber = "1234567890",
+            StreetAddress = "123 Main st",
+            ZipCode = "12345",
+            Locality = "Cityville"
+        };
+        // Mock SaveContactToFile to return true (save to file)
+        _fileServiceFalseMock
+            .Setup(fs => fs.SaveContactToFile(It.IsAny<List<Contact>>()))
+            .Returns(false);
+
+        //Act 
+        _contactServiceFalse.AddContact(contactRegistrationForm);// This will call CreateContact
+
+        //Assert
+        _fileServiceFalseMock.Verify(fs => fs.SaveContactToFile(It.IsAny<List<Contact>>()), Times.Never);// Verify that SaveContactToFile was not called once
+    }
+    }
