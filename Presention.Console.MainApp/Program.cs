@@ -12,5 +12,5 @@ IHost host = Host.CreateDefaultBuilder().ConfigureServices((config, services) =>
 })
 .Build();
 
-    var menuService = host.Services.GetRequiredService<MenuService>();
-    menuService?.ShowMenu();
+var menuService = host.Services.GetRequiredService<MenuService>();
+menuService?.ShowMenu();

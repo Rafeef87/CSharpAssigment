@@ -73,7 +73,12 @@ public class MenuService(IContactService contactService)
         Console.Write("ENTER YOUR LOCALITY: ");
         contactRegistrationForm.Locality = Console.ReadLine()!;
 
-        _contactService.AddContact(contactRegistrationForm);
+        bool result = _contactService.AddContact(contactRegistrationForm);
+        if (result)
+            OutPutDialog("USER WAS SUCCESSFULLY CREATED");
+        else
+            OutPutDialog("USER WAS NOT CREATED SUCCESSFULLY");
+        
     }
 
     //View all items
@@ -92,6 +97,13 @@ public class MenuService(IContactService contactService)
         {
             Console.WriteLine($"[{contact.Id},{contact.FirstName},{contact.LastName},{contact.Email},{contact.PhoneNumber},{ contact.StreetAddress},{contact.ZipCode},{ contact.Locality}]");
         }
+        Console.ReadKey();
+    }
+    //Out Put message
+    public void OutPutDialog(string message)
+    {
+        Console.Clear();
+        Console.WriteLine(message);
         Console.ReadKey();
     }
 }
