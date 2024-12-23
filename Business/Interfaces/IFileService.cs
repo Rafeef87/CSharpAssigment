@@ -1,11 +1,6 @@
-﻿
-using Business.Models;
+﻿namespace Business.Interfaces;
 
-namespace Business.Interfaces;
-
-public interface IFileService
+public interface IFileService: IFileWriter, IFileReader
 {
-    bool SaveContactToFile(List<Contact> list);
-    List<Contact> LoadListFromFile();
-
+ 
 }

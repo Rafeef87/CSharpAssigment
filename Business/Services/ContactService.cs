@@ -1,24 +1,20 @@
 ﻿using System.Diagnostics;
 using System.Text.Json.Serialization;
-using Business.Converters;
 using Business.Factories;
+using Business.Helpers;
 using Business.Interfaces;
 using Business.Models;
+using Business.Repositories;
 
 namespace Business.Services;
 
 //Use Dependency Injection
-public class ContactService : IContactService
+public class ContactService(IContactRepository contactRepository) : IContactService
 {
     
-    private readonly IFileService _fileService;
+    private readonly IContactRepository _contactRepository = contactRepository;
     //Create a list of Contacts
-    private List<Contact> _contacts = new List<Contact>();
-    public ContactService(IFileService fileService)
-    {  
-        _fileService = fileService;
-        _contacts = _fileService.LoadListFromFile();
-    }
+    private List<Contact> _contacts = [];
 
     // Add a contact and save to file
     public bool AddContact(ContactRegistrationForm form)
@@ -26,12 +22,14 @@ public class ContactService : IContactService
         try
         {
             var contact = ContactFactory.Create(form);
-
-            _contacts.Add(contact);
-            // Convert the contact list to JSON and save it to the file
-            _fileService.SaveContactToFile(_contacts);
-            return true;
-          
+            if (contact != null)
+            {
+                _contacts.Add(contact);
+                // Convert the contact list to JSON and save it to the file
+                _contactRepository.SaveToFile(_contacts);
+                return true;
+            }
+            return false;
         }
         catch (Exception ex) 
         {
@@ -42,10 +40,9 @@ public class ContactService : IContactService
 
     public IEnumerable<Contact> GetAllContacts()
     {
-       
-        var contacs = _fileService.LoadListFromFile();
-        return contacs;
-  
+        _contacts = _contactRepository.GetFormFile()!;
+        return _contacts
+            .Where(contact => contact.IsRegistered == false)
+            .ToList();
     }
-  
 }

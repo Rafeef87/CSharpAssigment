@@ -1,11 +1,12 @@
-﻿using Business.Converters;
+﻿
 using Business.Interfaces;
+using Business.Repositories;
 using System.Diagnostics;
 using System.Text.Json;
 
 namespace Business.Models;
 //Create a file service
-public class FileService : IFileService
+public abstract class FileService : IFileService
 {
     private readonly string _filePath;
     private readonly string _directoryPath;
@@ -16,14 +17,18 @@ public class FileService : IFileService
         _directoryPath = directoryPath;
         _filePath = Path.Combine(_directoryPath, fileName);
         _jsonSerializerOptions = new JsonSerializerOptions();
+        
     }
 
-    public bool SaveContactToFile(List<Contact> list)
+    public virtual bool SaveContactToFile(string list)
     {
         try
         {
-            var json = JsonContactConverter.ConvertToJson(list);
-            File.WriteAllText(_filePath, json);
+            if (!Directory.Exists(_directoryPath))
+            { 
+                Directory.CreateDirectory(_directoryPath);
+            }
+            File.WriteAllText(_filePath, list);
             return true;
         }
         catch (Exception ex)
@@ -31,14 +36,14 @@ public class FileService : IFileService
             Debug.WriteLine(ex.Message);
             return false;
         }
-
     }
 
-    public List<Contact> LoadListFromFile()
+    public virtual string LoadListFromFile()
     {
-            var json = File.ReadAllText(_filePath);
-            var contacts = JsonContactConverter.ConvertToList(json);
-            return contacts;
-
+            if (!File.Exists(_filePath))
+            {
+                return File.ReadAllText(_filePath);
+            }
+        return null!;
     }
 }

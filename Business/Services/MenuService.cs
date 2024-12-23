@@ -75,9 +75,9 @@ public class MenuService(IContactService contactService)
 
         bool result = _contactService.AddContact(contactRegistrationForm);
         if (result)
-            OutPutDialog("USER WAS SUCCESSFULLY CREATED");
+            OutPutDialog("CONTACT WAS SUCCESSFULLY CREATED");
         else
-            OutPutDialog("USER WAS NOT CREATED SUCCESSFULLY");
+            OutPutDialog("CONTACT WAS NOT CREATED SUCCESSFULLY");
         
     }
 
