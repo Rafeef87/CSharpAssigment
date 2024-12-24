@@ -6,7 +6,7 @@ namespace Business.Services;
 //Build the main menu
 public class MenuService(IContactService contactService)
 {
-    private  IContactService _contactService = contactService;
+    private readonly IContactService _contactService = contactService;
 
     //Show Menu
     public void ShowMenu()

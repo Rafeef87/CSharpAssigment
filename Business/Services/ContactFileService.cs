@@ -11,7 +11,7 @@ public class ContactFileService : FileService, IContactFileService
 
     }
 
-    public override List<Contact> LoadListFromFile()
+    public override string LoadListFromFile()
     {
         return base.LoadListFromFile();
     }

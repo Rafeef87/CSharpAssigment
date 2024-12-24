@@ -41,8 +41,6 @@ public class ContactService(IContactRepository contactRepository) : IContactServ
     public IEnumerable<Contact> GetAllContacts()
     {
         _contacts = _contactRepository.GetFormFile()!;
-        return _contacts
-            .Where(contact => contact.IsRegistered == false)
-            .ToList();
+        return _contacts;
     }
 }

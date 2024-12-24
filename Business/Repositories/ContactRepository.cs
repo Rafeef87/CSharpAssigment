@@ -1,21 +1,31 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.Json;
 using Business.Interfaces;
 using Business.Models;
 
 namespace Business.Repositories;
 
-public class ContactRepository(IContactFileService contactFileService) : BaseRepository<Contact>, IContactRepository
+public class ContactRepository : BaseRepository<Contact>, IContactRepository
 {
-    private readonly IContactFileService _contactFileService = contactFileService;
+    private readonly IContactFileService _contactFileService;
+
+    public ContactRepository()
+    {
+        
+    }
+
+    public ContactRepository(IContactFileService contactFileService)
+    {
+        _contactFileService = contactFileService;
+
+    }
 
     // Get JSON from file and deserialize to a list
     public override List<Contact>? GetFormFile()
     {
         try
-        { 
-            var json = _contactFileService.LoadListFromFile();
+        {
+            string json = _contactFileService.LoadListFromFile();
             var list = Deserialize(json);
             return list;
         }
@@ -25,7 +35,6 @@ public class ContactRepository(IContactFileService contactFileService) : BaseRep
             return null;
         }
     }
-
     // Save list as JSON string to file
     public override bool SaveToFile(List<Contact> list)
     {
