@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Busine
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business.Tests", "Business.Tests\Business.Tests.csproj", "{4BEBC9E7-0059-49BC-9778-2B5591FCA2DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presention.MAUI.MainApp", "Presention.MAUI.MainApp\Presention.MAUI.MainApp.csproj", "{4D5997F7-D8A4-4915-96C8-63EA812592CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,11 @@ Global
 		{4BEBC9E7-0059-49BC-9778-2B5591FCA2DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BEBC9E7-0059-49BC-9778-2B5591FCA2DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BEBC9E7-0059-49BC-9778-2B5591FCA2DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D5997F7-D8A4-4915-96C8-63EA812592CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D5997F7-D8A4-4915-96C8-63EA812592CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D5997F7-D8A4-4915-96C8-63EA812592CF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4D5997F7-D8A4-4915-96C8-63EA812592CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D5997F7-D8A4-4915-96C8-63EA812592CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
