@@ -5,7 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Presention.MAUI.MainApp"
     xmlns:pages="clr-namespace:Presention.MAUI.MainApp.Pages"
-    Shell.FlyoutBehavior="Flyout"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
     Title="Presention.MAUI.MainApp">
 
     <ShellContent Title="OverView" Route="ContactListPage" ContentTemplate="{DataTemplate pages:ContactListPage}"/>

@@ -14,7 +14,7 @@ public class ContactService(IContactRepository contactRepository) : IContactServ
     
     private readonly IContactRepository _contactRepository = contactRepository;
     //Create a list of Contacts
-    private List<Contact> _contacts = [];
+    public List<Contact> Contacts { get; private set; } = [];
 
     // Add a contact and save to file
     public bool AddContact(ContactRegistrationForm form)
@@ -22,11 +22,11 @@ public class ContactService(IContactRepository contactRepository) : IContactServ
         try
         {
             var contact = ContactFactory.Create(form);
-            if (contact != null)
+            if (contact != null && !string.IsNullOrWhiteSpace(contact.FirstName))
             {
-                _contacts.Add(contact);
+                Contacts.Add(contact);
                 // Convert the contact list to JSON and save it to the file
-                _contactRepository.SaveToFile(_contacts);
+                _contactRepository.SaveToFile(Contacts);
                 return true;
             }
             return false;
@@ -40,7 +40,21 @@ public class ContactService(IContactRepository contactRepository) : IContactServ
 
     public IEnumerable<Contact> GetAllContacts()
     {
-        _contacts = _contactRepository.GetFormFile()!;
-        return _contacts;
+        Contacts = _contactRepository.GetFormFile()!;
+        return Contacts;
+    }
+    public bool RemoveContactFromList(ContactRegistrationForm form)
+    {
+        if (!string.IsNullOrWhiteSpace(form.FirstName))
+        {
+            var exisitingContact = Contacts.FirstOrDefault(x => x.FirstName == form.FirstName);
+            if (exisitingContact != null)
+            {
+                Contacts.Remove(exisitingContact);
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 }
