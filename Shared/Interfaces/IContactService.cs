@@ -5,7 +5,7 @@ namespace Shared.Interfaces;
 
 public interface IContactService
 {
-    void AddContactToList(Contact contact);
+    bool AddContactToList(ContactRegistrationForm form);
     IEnumerable<Contact> GetAllContacts();
-    bool RemoveContactFromList(Contact contact);
+    bool RemoveContactFromList(ContactRegistrationForm form);
 }

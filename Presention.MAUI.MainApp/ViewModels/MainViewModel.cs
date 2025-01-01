@@ -1,9 +1,9 @@
 ﻿
 using System.Collections.ObjectModel;
-using Business.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Business.Services;
+using Shared.Services;
+using Shared.Models;
 
 
 namespace Presention.MAUI.MainApp.ViewModels;
@@ -21,28 +21,28 @@ public partial class MainViewModel : ObservableObject
     private ContactRegistrationForm _contactRegistrationForm = new();
 
     [ObservableProperty]
-    private ObservableCollection<Business.Models.Contact> _contactList = [];
+    private ObservableCollection<Shared.Models.Contact> _contactList = [];
 
     [RelayCommand]
-    public void AddContactToList()
+    public bool AddContactToList()
     {
         if (ContactRegistrationForm != null && !string.IsNullOrWhiteSpace(ContactRegistrationForm.FirstName) &&
                 !string.IsNullOrWhiteSpace(ContactRegistrationForm.LastName) &&
                 !string.IsNullOrWhiteSpace(ContactRegistrationForm.Email))
+                return true;
         {
-            var result = _contactService.AddContact(ContactRegistrationForm);
+            var result = _contactService.AddContactToList(ContactRegistrationForm);
             if (result)
             {
                 UpdateContactList();
-                ContactRegistrationForm = new ContactRegistrationForm();
             }
-        
         }
+        return false;
     }
 
     public void UpdateContactList()
     {
-        ContactList = new ObservableCollection<Business.Models.Contact>(_contactService.Contacts.Select(contact => new Business.Models.Contact()).ToList());
+        ContactList = new ObservableCollection<Shared.Models.Contact>(_contactService.Contacts.Select(contact => new Shared.Models.Contact()).ToList());
     }
 
 }

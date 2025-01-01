@@ -1,4 +1,5 @@
 ﻿
+using Shared.Factories;
 using Shared.Interfaces;
 using Shared.Models;
 
@@ -6,24 +7,41 @@ namespace Shared.Services;
 
 public class ContactService(IFileService fileService) : IContactService
 {
-    private List<Contact> _contacts = [];
+    public List<Contact> Contacts { get; private set; } = [];
     private readonly IFileService _fileService = fileService;
 
-    public void AddContactToList(Contact contact)
+    public bool AddContactToList(ContactRegistrationForm form)
     {
-        _contacts.Add(contact);
-        _fileService.SaveContactToFile(_contacts);
+        var contact = ContactFactory.Create(form);
+        if (form != null && !string.IsNullOrWhiteSpace(form.FirstName))
+        {
+            Contacts.Add(contact);
+            _fileService.SaveContactToFile(Contacts);
+            return true;
+        }
+        return false;
     }
+      
+
     public IEnumerable<Contact> GetAllContacts()
     {
-        _contacts = _fileService.LoadListFromFile();
-        return _contacts;
+        Contacts = _fileService.LoadListFromFile();
+        return Contacts;
     }
 
-    public bool RemoveContactFromList(Contact contact)
+    public bool RemoveContactFromList(ContactRegistrationForm form)
     {
-        _contacts.Remove(contact);
-        _fileService.RemoveContactfromFile(_contacts);
-        return true;
+        if (!string.IsNullOrWhiteSpace(form.FirstName))
+        {
+            var existingContact = Contacts.FirstOrDefault(x => x.FirstName == form.FirstName);
+            if (existingContact != null)
+            {
+                Contacts.Remove(existingContact);
+                _fileService.RemoveContactfromFile(Contacts);
+                return true;
+            }
+        }
+
+        return false;
     }
 }
