@@ -14,6 +14,7 @@ namespace Shared.Factories
         {
             return new ContactPersone()
             {
+                Id = form.Id,
                 FirstName = form.FirstName,
                 LastName = form.LastName,
                 Email = form.Email,

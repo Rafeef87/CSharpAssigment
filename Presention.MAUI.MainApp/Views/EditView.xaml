@@ -3,14 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              
              xmlns:viewmodels="clr-namespace:Presention.MAUI.MainApp.ViewModels"
+             xmlns:models="clr-namespace:Shared.Models;assembly=Shared"
              x:DataType="{x:Type viewmodels:ContactUpdateViewModel}"
              
              x:Class="Presention.MAUI.MainApp.Views.EditView"
-             Title="EditView">
+             Title="Edit Contact">
     
-    <VerticalStackLayout Grid.Row="0">
+    <VerticalStackLayout Margin="20">
         <Label Text="Contacts: " VerticalOptions="Center" HorizontalOptions="Center" />
         <Entry Text="{Binding Item.Title}" />
+        
+        <Label Text="First Name" Margin="0,10" />
+        <Entry Text="{Binding ContactRegistrationForm.FirstName}" />
+
+        <Label Text="Last Name" Margin="0,10" />
+        <Entry Text="{Binding ContactRegistrationForm.LastName}" />
+
+        <Label Text="Email" Margin="0,10" />
+        <Entry Text="{Binding ContactRegistrationForm.Email}" />
+
+        <Label Text="Phone Number" Margin="0,10" />
+        <Entry Text="{Binding ContactRegistrationForm.PhoneNumber}" />
+
+        <Label Text="Address" Margin="0,10" />
+        <Entry Text="{Binding ContactRegistrationForm.StreetAddress}" />
+
+        <Label Text="Zip Code" Margin="0,10" />
+        <Entry Text="{Binding ContactRegistrationForm.ZipCode}" />
+
+        <Label Text="City" Margin="0,10" />
+        <Entry Text="{Binding ContactRegistrationForm.City}" />
+        
         <Button Text="Save" Command="{Binding UpdateCommand}" Margin="0,10,0,0"/>
     </VerticalStackLayout>
 </ContentPage>

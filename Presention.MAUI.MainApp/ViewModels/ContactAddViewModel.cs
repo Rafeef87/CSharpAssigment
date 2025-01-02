@@ -16,10 +16,15 @@ public partial class ContactAddViewModel : ObservableObject
         _contactService = contactService;
     }
 
-    [RelayCommand]
-    private void Add()
-    {
-     
+    [ObservableProperty]
+    private ContactRegistrationForm contactRegistrationForm = new();
 
+    [RelayCommand]
+    private async Task Add()
+    {
+        _contactService.AddContactToList(ContactRegistrationForm);
+        ContactRegistrationForm = new();
+
+        await Shell.Current.GoToAsync("..");
     }
 }

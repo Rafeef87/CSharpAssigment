@@ -1,4 +1,4 @@
-﻿using Presention.MAUI.MainApp.Pages;
+﻿using Presention.MAUI.MainApp.Views;
 
 namespace Presention.MAUI.MainApp
 {
@@ -7,10 +7,10 @@ namespace Presention.MAUI.MainApp
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(ContactListPage), typeof(ContactListPage));
-            Routing.RegisterRoute(nameof(ContactAddPage), typeof(ContactAddPage));
-            Routing.RegisterRoute(nameof(ContactUpdatePage), typeof(ContactUpdatePage));
-            Routing.RegisterRoute(nameof(ContactDeletPage), typeof(ContactDeletPage));
+            Routing.RegisterRoute(nameof(ListView), typeof(ListView));
+            Routing.RegisterRoute(nameof(AddView), typeof(AddView));
+            Routing.RegisterRoute(nameof(EditView), typeof(EditView));
+
         }
     }
 }

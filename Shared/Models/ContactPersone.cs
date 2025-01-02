@@ -1,4 +1,5 @@
 ﻿
+
 namespace Shared.Models;
 
 //Create a Contact class
