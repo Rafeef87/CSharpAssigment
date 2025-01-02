@@ -3,15 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Presention.MAUI.MainApp.Pages.ContactAddPage"
              
+              xmlns:models="clr-namespace:Shared.Models;assembly=Shared"
              xmlns:viewmodels="clr-namespace:Presention.MAUI.MainApp.ViewModels"
-             x:DataType="{x:Type viewmodels:ContactAddViewModel}"
+             x:DataType="{x:Type viewmodels:MainViewModel}"
              
              Title="Contact Add Page">
-    <VerticalStackLayout>
-        <Label 
-            Text="Add New Contact"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Button Text="Contact List" Command="{Binding NavigateToListCommand}"/>
-    </VerticalStackLayout>
+    
 </ContentPage>

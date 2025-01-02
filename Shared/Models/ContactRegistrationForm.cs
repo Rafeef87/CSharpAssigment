@@ -1,7 +1,7 @@
 ﻿
 namespace Shared.Models
 {
-    public class ContactRegistrationForm 
+    public class ContactRegistrationForm
     {
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
@@ -12,3 +12,4 @@ namespace Shared.Models
         public string City { get; set; } = null!;
     }
 }
+

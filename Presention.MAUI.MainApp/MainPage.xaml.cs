@@ -1,4 +1,5 @@
-﻿using Presention.MAUI.MainApp.ViewModels;
+﻿
+using Presention.MAUI.MainApp.ViewModels;
 
 namespace Presention.MAUI.MainApp;
 
@@ -10,6 +11,6 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
         BindingContext = viewModel;
+      
     }
-
 }

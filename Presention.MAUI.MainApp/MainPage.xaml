@@ -2,12 +2,15 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              
-             
+             xmlns:models="clr-namespace:Shared.Models;assembly=Shared"
+             xmlns:services="clr-namespace:Shared.Services;assembly=Shared"
+             xmlns:viewmodels="clr-namespace:Presention.MAUI.MainApp.ViewModels"
+             x:DataType="{x:Type viewmodels:MainViewModel}"
              
              x:Class="Presention.MAUI.MainApp.MainPage">
-
-    <ScrollView>
-
-    </ScrollView>
+    <Grid RowDefinitions="auto, *" Margin="20">
+        
+        
+    </Grid>
 
 </ContentPage>

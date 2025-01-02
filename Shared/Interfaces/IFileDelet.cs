@@ -4,6 +4,6 @@ namespace Shared.Interfaces
 {
     public interface IFileDelet
     {
-        bool RemoveContactfromFile(List<Contact> list);
+        bool RemoveContactfromFile(List<ContactPersone> list);
     }
 }

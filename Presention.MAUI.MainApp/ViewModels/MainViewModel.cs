@@ -16,33 +16,48 @@ public partial class MainViewModel : ObservableObject
         _contactService = contactService;
         UpdateContactList();
     }
+    [ObservableProperty]
+    private ContactRegistrationForm contactRegistrationForm = new();
 
     [ObservableProperty]
-    private ContactRegistrationForm _contactRegistrationForm = new();
-
-    [ObservableProperty]
-    private ObservableCollection<Shared.Models.Contact> _contactList = [];
+    private ObservableCollection<ContactPersone> contactList = [];
 
     [RelayCommand]
-    public bool AddContactToList()
+    public void AddContactToList()
     {
-        if (ContactRegistrationForm != null && !string.IsNullOrWhiteSpace(ContactRegistrationForm.FirstName) &&
+        if (ContactRegistrationForm != null &&
+                !string.IsNullOrWhiteSpace(ContactRegistrationForm.FirstName) &&
                 !string.IsNullOrWhiteSpace(ContactRegistrationForm.LastName) &&
-                !string.IsNullOrWhiteSpace(ContactRegistrationForm.Email))
-                return true;
+                !string.IsNullOrWhiteSpace(ContactRegistrationForm.Email) &&
+                !string.IsNullOrWhiteSpace(ContactRegistrationForm.PhoneNumber) &&
+                !string.IsNullOrWhiteSpace(ContactRegistrationForm.StreetAddress) &&
+                !string.IsNullOrWhiteSpace(ContactRegistrationForm.ZipCode) &&
+                !string.IsNullOrWhiteSpace(ContactRegistrationForm.City))
         {
             var result = _contactService.AddContactToList(ContactRegistrationForm);
             if (result)
             {
                 UpdateContactList();
+                ContactRegistrationForm = new();
             }
         }
-        return false;
+    }
+    [RelayCommand]
+    public void RemoveContactFromList(ContactRegistrationForm form)
+    {
+        if(form != null)
+        {
+            var result = _contactService.RemoveContactFromList(form);
+            if (result)
+            { 
+                UpdateContactList();
+            }
+        }
     }
 
     public void UpdateContactList()
     {
-        ContactList = new ObservableCollection<Shared.Models.Contact>(_contactService.Contacts.Select(contact => new Shared.Models.Contact()).ToList());
+        ContactList = new ObservableCollection<ContactPersone>(_contactService.Contacts
+            .Select(contact => contact).ToList());
     }
-
 }

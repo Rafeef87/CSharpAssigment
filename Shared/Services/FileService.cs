@@ -16,7 +16,7 @@ namespace Shared.Services
             _filePath = Path.Combine(_directoryPath, fileName);
             _jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
         }
-        public void SaveContactToFile(List<Contact> list)
+        public void SaveContactToFile(List<ContactPersone> list)
         {
             try
             {
@@ -31,14 +31,14 @@ namespace Shared.Services
                 Debug.WriteLine(ex.Message);
             }
         }
-        public List<Contact> LoadListFromFile()
+        public List<ContactPersone> LoadListFromFile()
         {
             try
             {
                 if (!File.Exists(_filePath))
                     return [];
                 var json = File.ReadAllText(_filePath);
-                var list = JsonSerializer.Deserialize<List<Contact>>(json, _jsonSerializerOptions);
+                var list = JsonSerializer.Deserialize<List<ContactPersone>>(json, _jsonSerializerOptions);
                 return list ?? [];
             }
             catch (Exception ex)
@@ -48,7 +48,7 @@ namespace Shared.Services
             }
         }
 
-        public bool RemoveContactfromFile(List<Contact> list)
+        public bool RemoveContactfromFile(List<ContactPersone> list)
         {
             try
             {

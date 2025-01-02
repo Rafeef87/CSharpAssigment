@@ -4,6 +4,6 @@ namespace Shared.Interfaces
 {
     public interface IFileWriter
     {
-        void SaveContactToFile(List<Contact> list);
+        void SaveContactToFile(List<ContactPersone> list);
     }
 }

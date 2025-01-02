@@ -7,7 +7,7 @@ namespace Shared.Services;
 
 public class ContactService(IFileService fileService) : IContactService
 {
-    public List<Contact> Contacts { get; private set; } = [];
+    public List<ContactPersone> Contacts { get; private set; } = [];
     private readonly IFileService _fileService = fileService;
 
     public bool AddContactToList(ContactRegistrationForm form)
@@ -23,7 +23,7 @@ public class ContactService(IFileService fileService) : IContactService
     }
       
 
-    public IEnumerable<Contact> GetAllContacts()
+    public IEnumerable<ContactPersone> GetAllContacts()
     {
         Contacts = _fileService.LoadListFromFile();
         return Contacts;

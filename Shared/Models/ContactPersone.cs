@@ -2,7 +2,7 @@
 namespace Shared.Models;
 
 //Create a Contact class
-public class Contact
+public class ContactPersone
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();
     public string FirstName { get; set; } = null!;

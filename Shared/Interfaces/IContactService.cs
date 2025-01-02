@@ -6,6 +6,6 @@ namespace Shared.Interfaces;
 public interface IContactService
 {
     bool AddContactToList(ContactRegistrationForm form);
-    IEnumerable<Contact> GetAllContacts();
+    IEnumerable<ContactPersone> GetAllContacts();
     bool RemoveContactFromList(ContactRegistrationForm form);
 }

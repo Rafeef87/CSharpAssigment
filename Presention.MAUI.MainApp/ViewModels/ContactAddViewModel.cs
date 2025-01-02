@@ -1,14 +1,25 @@
 ﻿
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Shared.Models;
+using Shared.Services;
+
 
 namespace Presention.MAUI.MainApp.ViewModels;
 
 public partial class ContactAddViewModel : ObservableObject
 {
-    [RelayCommand]
-    private async Task NavigateToList()
+    private readonly ContactService _contactService;
+
+    public ContactAddViewModel(ContactService contactService)
     {
-        await Shell.Current.GoToAsync("ContactListPage");
+        _contactService = contactService;
+    }
+
+    [RelayCommand]
+    private void Add()
+    {
+     
+
     }
 }

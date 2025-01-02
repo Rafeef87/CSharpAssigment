@@ -4,6 +4,6 @@ namespace Shared.Interfaces
 {
     public interface IFileReader
     {
-        List<Contact> LoadListFromFile();
+        List<ContactPersone> LoadListFromFile();
     }
 }

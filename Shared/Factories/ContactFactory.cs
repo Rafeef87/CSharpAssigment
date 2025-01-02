@@ -10,9 +10,9 @@ namespace Shared.Factories
         { 
               return new ContactRegistrationForm();
         }
-        public static Contact Create(ContactRegistrationForm form)
+        public static ContactPersone Create(ContactRegistrationForm form)
         {
-            return new Contact()
+            return new ContactPersone()
             {
                 FirstName = form.FirstName,
                 LastName = form.LastName,
