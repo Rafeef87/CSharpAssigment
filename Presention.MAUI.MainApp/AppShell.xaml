@@ -9,8 +9,8 @@
 
     Title="Presention.MAUI.MainApp">
 
-    <ShellContent Title="List"  ContentTemplate="{DataTemplate ViewState:ListView}" Route="ListView" />
-    <ShellContent Title="Add"  ContentTemplate="{DataTemplate ViewState:AddView}" Route="AddView"/>
-    <ShellContent Title="Edit"  ContentTemplate="{DataTemplate ViewState:EditView}" Route="EditView"/>
+    <ShellContent Title="List" ContentTemplate="{DataTemplate views:ContactListView}" Route="ContactListView"/>
+    <ShellContent Title="Add"  ContentTemplate="{DataTemplate views:ContactAddView}" Route="ContactAddView"/>
+    <ShellContent Title="Edit" ContentTemplate="{DataTemplate views:ContactEditView}" Route="ContactEditView"/>
     
 </Shell>

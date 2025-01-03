@@ -1,9 +1,9 @@
 ﻿
-using Microsoft.Extensions.Logging;
 using Presention.MAUI.MainApp.ViewModels;
 using Presention.MAUI.MainApp.Views;
+using Shared.Interfaces;
 using Shared.Services;
-using ListView = Presention.MAUI.MainApp.Views.ListView;
+
 
 namespace Presention.MAUI.MainApp
 {
@@ -20,15 +20,15 @@ namespace Presention.MAUI.MainApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            builder.Services.AddSingleton<IFileService, FileService>();
             builder.Services.AddSingleton<ContactService>();
             builder.Services.AddSingleton<ContactListViewModel>();
-            builder.Services.AddSingleton<ListView>();
+            builder.Services.AddSingleton<ContactListView>();
             builder.Services.AddSingleton<ContactAddViewModel>();
-            builder.Services.AddSingleton<AddView>();
+            builder.Services.AddSingleton<ContactAddView>();
             builder.Services.AddSingleton<ContactUpdateViewModel>();
-            builder.Services.AddSingleton<EditView>();
+            builder.Services.AddSingleton<ContactEditView>();
 
-            builder.Logging.AddDebug();
             return builder.Build();
         }
     }

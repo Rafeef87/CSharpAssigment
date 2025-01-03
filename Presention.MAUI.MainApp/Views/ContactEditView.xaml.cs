@@ -3,9 +3,9 @@ using Presention.MAUI.MainApp.ViewModels;
 
 namespace Presention.MAUI.MainApp.Views;
 
-public partial class EditView : ContentPage
+public partial class ContactEditView : ContentPage
 {
-	public EditView(ContactUpdateViewModel viewModel)
+	public ContactEditView(ContactUpdateViewModel viewModel)
 	{
 		InitializeComponent();
         BindingContext = viewModel;

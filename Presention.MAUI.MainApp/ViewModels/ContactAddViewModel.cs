@@ -27,4 +27,11 @@ public partial class ContactAddViewModel : ObservableObject
 
         await Shell.Current.GoToAsync("..");
     }
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (query.TryGetValue("Contact", out var contact) && contact is ContactRegistrationForm form)
+        {
+            ContactRegistrationForm = form!;
+        }
+    }
 }

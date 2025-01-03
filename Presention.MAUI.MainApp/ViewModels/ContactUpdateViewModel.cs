@@ -25,6 +25,6 @@ public partial class ContactUpdateViewModel : ObservableObject
     }
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        Form = (query["Contact"] as ContactRegistrationForm)!;
+        ContactRegistrationForm = (query["Contact"] as ContactRegistrationForm)!;
     }
 }

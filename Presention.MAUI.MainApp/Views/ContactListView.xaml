@@ -6,26 +6,27 @@
              xmlns:models="clr-namespace:Shared.Models;assembly=Shared"
               x:DataType="{x:Type viewmodels:ContactListViewModel}"
              
-             x:Class="Presention.MAUI.MainApp.Views.ListView"
+             x:Class="Presention.MAUI.MainApp.Views.ContactListView"
              Title="List All Contact">
+    
     <Grid RowDefinitions="auto, *" Margin="20">
         <Button Grid.Row="0" Text="Add New Contact" Command="{Binding AddContactToListCommand}" />
-        
+
         <CollectionView Grid.Row="1" ItemsSource="{Binding ContactList}">
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="models:ContactPersone">
                 <Border Background="Transparent" Padding="10" Margin="0">
                     <Grid ColumnDefinitions="*, auto">
                         <Label Grid.Column="0" Text="{Binding FirstName}" VerticalOptions="Center"/>
-                        <Label Grid.Column="0" Text="{Binding LastName}" VerticalOptions="Center"/>
-                        <Label Grid.Column="0" Text="{Binding Email}" VerticalOptions="Center"/>
-                        <Label Grid.Column="0" Text="{Binding PhoneNumber}" VerticalOptions="Center"/>
-                        <Label Grid.Column="0" Text="{Binding StreetAddress}" VerticalOptions="Center"/>
-                        <Label Grid.Column="0" Text="{Binding ZipCode}" VerticalOptions="Center"/>
-                        <Label Grid.Column="0" Text="{Binding City}" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" Text="{Binding LastName}" VerticalOptions="Center"/>
+                        <Label Grid.Column="2" Text="{Binding Email}" VerticalOptions="Center"/>
+                        <Label Grid.Column="3" Text="{Binding PhoneNumber}" VerticalOptions="Center"/>
+                        <Label Grid.Column="4" Text="{Binding StreetAddress}" VerticalOptions="Center"/>
+                        <Label Grid.Column="5" Text="{Binding ZipCode}" VerticalOptions="Center"/>
+                        <Label Grid.Column="6" Text="{Binding City}" VerticalOptions="Center"/>
 
                         <HorizontalStackLayout Grid.Column="1">
-                                <Button Text="EDIT" CommandParameter="{Binding .}" Command="{Binding Path=AddContactToListCommand, Source={RelativeSource AncestorType={x:Type viewmodels:ContactListViewModel}}}" Margin="5" />
+                                <Button Text="EDIT" CommandParameter="{Binding .}" Command="{Binding Path=UpdateContactListCommand, Source={RelativeSource AncestorType={x:Type viewmodels:ContactListViewModel}}}" Margin="5" />
                                 <Button Text="DELETE" CommandParameter="{Binding .}" Command="{Binding Path=RemoveContactFromListCommand, Source={RelativeSource AncestorType={x:Type viewmodels:ContactListViewModel}}}" Margin="5" />
                         </HorizontalStackLayout>
                     </Grid>

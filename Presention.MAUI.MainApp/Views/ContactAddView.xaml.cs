@@ -2,9 +2,9 @@ using Presention.MAUI.MainApp.ViewModels;
 
 namespace Presention.MAUI.MainApp.Views;
 
-public partial class AddView : ContentPage
+public partial class ContactAddView : ContentPage
 {
-	public AddView(ContactAddViewModel viewModel)
+	public ContactAddView(ContactAddViewModel viewModel)
 	{
 		InitializeComponent();
 		BindingContext = viewModel;

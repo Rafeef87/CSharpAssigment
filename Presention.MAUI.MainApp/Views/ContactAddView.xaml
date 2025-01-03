@@ -2,17 +2,15 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              
-             xmlns:viewmodels="clr-namespace:Presention.MAUI.MainApp.ViewModels"
-             xmlns:models="clr-namespace:Shared.Models;assembly=Shared"
-             x:DataType="{x:Type viewmodels:ContactUpdateViewModel}"
+               xmlns:viewmodels="clr-namespace:Presention.MAUI.MainApp.ViewModels"
+               xmlns:models="clr-namespace:Shared.Models;assembly=Shared"
+               x:DataType="{x:Type viewmodels:ContactAddViewModel}"
              
-             x:Class="Presention.MAUI.MainApp.Views.EditView"
-             Title="Edit Contact">
+             x:Class="Presention.MAUI.MainApp.Views.ContactAddView"
+             Title="Add Contact">
     
     <VerticalStackLayout Margin="20">
         <Label Text="Contacts: " VerticalOptions="Center" HorizontalOptions="Center" />
-        <Entry Text="{Binding Item.Title}" />
-        
         <Label Text="First Name" Margin="0,10" />
         <Entry Text="{Binding ContactRegistrationForm.FirstName}" />
 
@@ -33,7 +31,7 @@
 
         <Label Text="City" Margin="0,10" />
         <Entry Text="{Binding ContactRegistrationForm.City}" />
-        
-        <Button Text="Save" Command="{Binding UpdateCommand}" Margin="0,10,0,0"/>
+
+        <Button Text="Save" Command="{Binding AddCommand}" Margin="0,10,0,0"/>
     </VerticalStackLayout>
 </ContentPage>
