@@ -28,6 +28,8 @@ namespace Presention.MAUI.MainApp
             builder.Services.AddSingleton<ContactAddView>();
             builder.Services.AddSingleton<ContactUpdateViewModel>();
             builder.Services.AddSingleton<ContactEditView>();
+            builder.Services.AddSingleton<ContactDeletViewModel>();
+            builder.Services.AddSingleton<ContactDeleteView>();
 
             return builder.Build();
         }

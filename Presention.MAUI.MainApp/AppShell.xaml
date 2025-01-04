@@ -6,11 +6,12 @@
     xmlns:local="clr-namespace:Presention.MAUI.MainApp"
     xmlns:views="clr-namespace:Presention.MAUI.MainApp.Views"
     Shell.FlyoutBehavior="Disabled"
-
+    Shell.NavBarIsVisible="True"
     Title="Presention.MAUI.MainApp">
 
     <ShellContent Title="List" ContentTemplate="{DataTemplate views:ContactListView}" Route="ContactListView"/>
     <ShellContent Title="Add"  ContentTemplate="{DataTemplate views:ContactAddView}" Route="ContactAddView"/>
     <ShellContent Title="Edit" ContentTemplate="{DataTemplate views:ContactEditView}" Route="ContactEditView"/>
+    <ShellContent Title="Delete" ContentTemplate="{DataTemplate views:ContactDeleteView}" Route="ContactDeleteView"/>
     
 </Shell>

@@ -15,46 +15,40 @@ namespace Presention.MAUI.MainApp.ViewModels
         public ContactListViewModel(ContactService contactService)
         {
             _contactService = contactService;
+            // Update the list when there is a change in the contact list
             _contactService.ContactListaUpdate += (sender, e) =>
             {
                 contactList = new ObservableCollection<ContactPersone>(_contactService.GetAllContacts());
             };
+            // Initializing the list
+            contactList = new ObservableCollection<ContactPersone>(_contactService.GetAllContacts());
         }
 
         [ObservableProperty]
-        private ObservableCollection<ContactPersone> contactList = [];
+        private ObservableCollection<ContactPersone> contactList = new();
         // Navigate to "AddView"
         [RelayCommand]
-        private async Task AddContactToList()
+        private async Task AddContactToList(ContactPersone contact)
         {
-            await Shell.Current.GoToAsync("ContactAddView");
+            contactList.Add(contact);
+
+            await Shell.Current.GoToAsync("///ContactAddView");
         }
         // Navigate to "EditView" with form data
         [RelayCommand]
         private async Task UpdateContactList(ContactPersone contact)
         {
-            var parameters = new ShellNavigationQueryParameters
-            {
-                {"Contact", contact }
-            };
-            await Shell.Current.GoToAsync(nameof(ContactEditView), parameters);
+            contactList.Add(contact);
+
+            await Shell.Current.GoToAsync("///ContactEditView");
         }
         // Remove contact from the list
         [RelayCommand]
-        private void RemoveContactFromList(ContactPersone contact)
+        private async Task RemoveContactFromList(ContactPersone contact)
         {
-            _contactService.RemoveContactFromList(new ContactRegistrationForm
-            {
-                Id = contact.Id,
-                FirstName = contact.FirstName,
-                LastName = contact.LastName,
-                Email = contact.Email,
-                PhoneNumber = contact.PhoneNumber,
-                StreetAddress = contact.StreetAddress,
-                ZipCode = contact.ZipCode,
-                City = contact.City
-            });
-            ContactList = new ObservableCollection<ContactPersone>(_contactService.GetAllContacts());
+            contactList.Remove(contact);
+
+            await Shell.Current.GoToAsync("///ContactDeleteView");
         }
 
     }

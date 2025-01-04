@@ -8,6 +8,7 @@ namespace Shared.Services;
 public class ContactService(IFileService fileService) : IContactService
 {
     public List<ContactPersone> Contacts = [];
+    private ContactPersone contact;
     private readonly IFileService _fileService = fileService;
 
     public event EventHandler? ContactListaUpdate;
@@ -55,19 +56,14 @@ public class ContactService(IFileService fileService) : IContactService
     }
     public bool RemoveContactFromList(ContactRegistrationForm form)
     {
-        if (!string.IsNullOrWhiteSpace(form.FirstName))
-        {
-            var existingContact = Contacts.FirstOrDefault(x => x.Id == form.Id);
-            if (existingContact != null)
-            {
-                Contacts.Remove(existingContact);
-                _fileService.RemoveContactfromFile(Contacts);
-
-                ContactListaUpdate?.Invoke(this, EventArgs.Empty);
-                return true;
-            }
-        }
-
-        return false;
+        
+                    // Remove the contact from the list
+                    Contacts.Remove(contact);
+                    // Update the file
+                    _fileService.RemoveContactfromFile(Contacts);
+                    // Notify subscribers of update
+                    ContactListaUpdate?.Invoke(this, EventArgs.Empty);
+       
+               return true;
     }
 }

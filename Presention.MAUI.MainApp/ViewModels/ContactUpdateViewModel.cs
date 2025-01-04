@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Shared.Models;
 using Shared.Services;
@@ -19,12 +20,26 @@ public partial class ContactUpdateViewModel : ObservableObject
     [RelayCommand]
     private async Task Update()
     {
+        // Update the contact in the service
         _contactService.Update(ContactRegistrationForm);
-        ContactRegistrationForm = new();
-        await Shell.Current.GoToAsync("//ListView");
+        // Navigate back to the list of contacts
+        await Shell.Current.GoToAsync("///ContactListView");
     }
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        ContactRegistrationForm = (query["Contact"] as ContactRegistrationForm)!;
+        if (query.TryGetValue("Contact", out var contact) && contact is ContactPersone persone)
+        {
+            ContactRegistrationForm = new ContactRegistrationForm
+            {
+                Id = persone.Id,
+                FirstName = persone.FirstName,
+                LastName = persone.LastName,
+                Email = persone.Email,
+                PhoneNumber = persone.PhoneNumber,
+                StreetAddress = persone.StreetAddress,
+                ZipCode = persone.ZipCode,
+                City = persone.City
+            };
+        }
     }
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             
+            xmlns:models="clr-namespace:Shared.Models;assembly=Shared" 
+            xmlns:viewmodels="clr-namespace:Presention.MAUI.MainApp.ViewModels"
+            x:DataType="{x:Type viewmodels:ContactDeletViewModel}"
+             
+             x:Class="Presention.MAUI.MainApp.Views.ContactDeleteView"
+             Title="Delete Contact">
+    
+    <VerticalStackLayout Padding="20" Spacing="10">
+        <Label Text="Are you Sure you want to delete this contact? " Margin="0, 20"/>
+        <Label Text="{Binding ContactRegistrationForm.FirstName}" />
+        <Label Text="{Binding ContactRegistrationForm.LastName}"/>
+        <Label Text="{Binding ContactRegistrationForm.Email}" />
+        <Label Text="{Binding ContactRegistrationForm.PhoneNumber}" />
+        <Label Text="{Binding ContactRegistrationForm.StreetAddress}" />
+        <Label Text="{Binding ContactRegistrationForm.ZipCode}" />
+        <Label Text="{Binding ContactRegistrationForm.City}" />
+
+        <Button Text="DELETE" Command="{Binding DeleteContactCommand}" Margin="0,20,0,20" />
+        <Button Text="CANCEL" CommandParameter="///ContactListView" Command="{Binding  Path=GoBackCommand}" Margin="0,20,0,20" />
+    </VerticalStackLayout>
+</ContentPage>

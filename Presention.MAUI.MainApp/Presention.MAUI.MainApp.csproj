@@ -74,6 +74,9 @@
 	  <Compile Update="Views\ContactAddView.xaml.cs">
 	    <DependentUpon>ContactAddView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\ContactDeleteView.xaml.cs">
+	    <DependentUpon>ContactDeleteView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\ContactEditView.xaml.cs">
 	    <DependentUpon>ContactEditView.xaml</DependentUpon>
 	  </Compile>
@@ -96,6 +99,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ContactAddView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ContactDeleteView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ContactEditView.xaml">
