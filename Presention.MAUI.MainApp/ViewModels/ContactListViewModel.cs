@@ -26,12 +26,12 @@ namespace Presention.MAUI.MainApp.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<ContactPersone> contactList = new();
-        // Navigate to "AddView"
+        
         [RelayCommand]
         private async Task AddContactToList(ContactPersone contact)
         {
             contactList.Add(contact);
-
+            // Navigate to "AddView"
             await Shell.Current.GoToAsync("///ContactAddView");
         }
         // Navigate to "EditView" with form data

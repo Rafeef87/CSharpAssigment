@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              
+             xmlns:views="clr-namespace:Presention.MAUI.MainApp.Views"
              xmlns:viewmodels="clr-namespace:Presention.MAUI.MainApp.ViewModels"
              xmlns:models="clr-namespace:Shared.Models;assembly=Shared"
              x:DataType="{x:Type viewmodels:ContactUpdateViewModel}"
@@ -14,26 +15,27 @@
 
         
         <Label Text="First Name" Margin="0,10" />
-        <Entry Text="{Binding ContactRegistrationForm.FirstName}" />
+        <Entry Text="{Binding NewForm.FirstName}" />
 
         <Label Text="Last Name" Margin="0,10" />
-        <Entry Text="{Binding ContactRegistrationForm.LastName}" />
+        <Entry Text="{Binding NewForm.LastName}" />
 
         <Label Text="Email" Margin="0,10" />
-        <Entry Text="{Binding ContactRegistrationForm.Email}" />
+        <Entry Text="{Binding NewForm.Email}" />
 
         <Label Text="Phone Number" Margin="0,10" />
-        <Entry Text="{Binding ContactRegistrationForm.PhoneNumber}" />
+        <Entry Text="{Binding NewForm.PhoneNumber}" />
 
         <Label Text="Address" Margin="0,10" />
-        <Entry Text="{Binding ContactRegistrationForm.StreetAddress}" />
+        <Entry Text="{Binding NewForm.StreetAddress}" />
 
         <Label Text="Zip Code" Margin="0,10" />
-        <Entry Text="{Binding ContactRegistrationForm.ZipCode}" />
+        <Entry Text="{Binding NewForm.ZipCode}" />
 
         <Label Text="City" Margin="0,10" />
-        <Entry Text="{Binding ContactRegistrationForm.City}" />
+        <Entry Text="{Binding NewForm.City}" />
 
-        <Button Text="Save" Command="{Binding UpdateCommand}" Margin="0,10,0,0"/>
+        <Button Text="Save" Command="{Binding EditContactCommand}" Margin="0,10,0,0"/>
+        
     </VerticalStackLayout>
 </ContentPage>

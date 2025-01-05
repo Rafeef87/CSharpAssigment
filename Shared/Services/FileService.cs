@@ -53,11 +53,11 @@ namespace Shared.Services
             try
             {
                 // If the list is empty or null, return false
-                if (list == null || !list.Any())
-                    return false;
+                if (list != null || !list.Any())
+                    return true;
                 // Save the updated list back to the file
                 SaveContactToFile(list);
-                return true;
+                return false;
             }
             catch (Exception ex)
             {
@@ -65,5 +65,7 @@ namespace Shared.Services
                 return false;
             }
         }
+
+        
     }
 }

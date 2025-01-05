@@ -7,6 +7,6 @@ public interface IContactService
 {
     bool AddContactToList(ContactRegistrationForm form);
     IEnumerable<ContactPersone> GetAllContacts();
-    void Update(ContactRegistrationForm form);
+    bool Update(ContactRegistrationForm newForm);
     bool RemoveContactFromList(ContactRegistrationForm form);
 }

@@ -23,6 +23,7 @@ public class ContactService(IFileService fileService) : IContactService
             !string.IsNullOrWhiteSpace(form.ZipCode) &&
             !string.IsNullOrWhiteSpace(form.City))
         {
+           
             Contacts.Add(contact);
             _fileService.SaveContactToFile(Contacts);
             ContactListaUpdate?.Invoke(this, EventArgs.Empty);
@@ -36,27 +37,29 @@ public class ContactService(IFileService fileService) : IContactService
         Contacts = _fileService.LoadListFromFile();
         return Contacts;
     }
-    public void Update(ContactRegistrationForm form)
+    public bool Update(ContactRegistrationForm newForm)
     {
-        var contact = Contacts.FirstOrDefault(x => x.Id == form.Id);
-        if (contact != null)
-        {
-            contact.FirstName = form.FirstName;
-            contact.LastName = form.LastName;
-            contact.Email = form.Email;
-            contact.PhoneNumber = form.PhoneNumber;
-            contact.StreetAddress = form.StreetAddress;
-            contact.ZipCode = form.ZipCode;
-            contact.City = form.City;
+        
+        var contactInfo = Contacts.FirstOrDefault(x => x.Id == newForm.Id);
 
+        if (newForm != null && !string.IsNullOrWhiteSpace(newForm.FirstName) &&
+        !string.IsNullOrWhiteSpace(newForm.LastName) &&
+        !string.IsNullOrWhiteSpace(newForm.Email) &&
+        !string.IsNullOrWhiteSpace(newForm.PhoneNumber) &&
+        !string.IsNullOrWhiteSpace(newForm.StreetAddress) &&
+        !string.IsNullOrWhiteSpace(newForm.ZipCode) &&
+        !string.IsNullOrWhiteSpace(newForm.City))
+        {
             _fileService.SaveContactToFile(Contacts);
 
             ContactListaUpdate?.Invoke(this, EventArgs.Empty);
+            return true;
         }
+        return false;
     }
     public bool RemoveContactFromList(ContactRegistrationForm form)
     {
-        
+
                     // Remove the contact from the list
                     Contacts.Remove(contact);
                     // Update the file
