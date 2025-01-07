@@ -8,17 +8,38 @@ using Shared.Services;
 
 namespace Presention.MAUI.MainApp.ViewModels;
 
-public partial class ContactUpdateViewModel(ContactService contactService) : ObservableObject
+public partial class ContactUpdateViewModel : ObservableObject
 {
-    private readonly ContactService _contactService = contactService;
+    private readonly ContactService _contactService;
     [ObservableProperty]
     private ContactRegistrationForm newForm = new();
+
+    public ContactUpdateViewModel(ContactService contactService)
+    {
+        _contactService = contactService;
+    }
+
     [RelayCommand]
     private async Task EditContact()
     {
-        // Update the contact in the service
-        _contactService.Update(newForm);
-        NewForm = new ();
+        if (Guid.TryParse(NewForm.Id, out var contactId))
+        {
+            // Check if contact exists and update
+            var existingContact = _contactService.GetContactById(contactId);
+            if (existingContact != null)
+            {
+                // Update the existing contact in the service
+                _contactService.Update(NewForm);
+            }
+            else
+            {
+                // Add new contact if it doesn't exist
+                _contactService.AddContactToList(NewForm);
+            }
+        }
+       
+            // Reset the form
+            NewForm = new ();
         // Navigate back to the list of contacts
         await Shell.Current.GoToAsync("///ContactListView");
     }

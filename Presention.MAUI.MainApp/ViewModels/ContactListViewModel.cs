@@ -38,7 +38,20 @@ namespace Presention.MAUI.MainApp.ViewModels
         [RelayCommand]
         private async Task UpdateContactList(ContactPersone contact)
         {
-            contactList.Add(contact);
+            // Check if the contact exists in the list
+            var existingContact = contactList.FirstOrDefault(c => c.Id == contact.Id);
+
+            if (existingContact != null)
+            {
+                // Update the existing contact
+                var index = contactList.IndexOf(existingContact);
+                contactList[index] = contact;
+            }
+            else
+            {
+                // Add new contact
+                contactList.Add(contact);
+            }
 
             await Shell.Current.GoToAsync("///ContactEditView");
         }

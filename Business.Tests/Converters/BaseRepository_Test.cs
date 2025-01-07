@@ -1,15 +1,30 @@
 ﻿using System.Text.Json;
+using Business.Interfaces;
 using Business.Models;
 using Business.Repositories;
+using Moq;
 
 namespace Business.Tests.Converters;
 
 public class BaseRepository_Test
 {
     private readonly ContactRepository _contactRepository;
-    public BaseRepository_Test() 
+
+    public BaseRepository_Test()
     {
-        _contactRepository = new ContactRepository();
+        // Mocka IContactFileService
+        var mockContactFileService = new Mock<IContactFileService>();
+
+        // Mock för fil-läsning och skrivning
+        mockContactFileService
+            .Setup(service => service.LoadListFromFile())
+            .Returns("[]"); // Returnera en tom lista som JSON
+
+        mockContactFileService
+            .Setup(service => service.SaveContactToFile(It.IsAny<string>()));
+
+        // Skapa ContactRepository med mockad tjänst
+        _contactRepository = new ContactRepository(mockContactFileService.Object);
     }
 
     [Fact]
@@ -30,7 +45,7 @@ public class BaseRepository_Test
         var list = new List<Contact> { contact };
 
         //Act
-        var result = _contactRepository.Serialize(list);
+        string result = _contactRepository.Serialize(list);
         //Assert
         Assert.NotNull(result);
     }

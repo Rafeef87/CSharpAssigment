@@ -7,7 +7,11 @@ namespace Shared.Services;
 
 public class ContactService(IFileService fileService) : IContactService
 {
-    public List<ContactPersone> Contacts = [];
+    public List<ContactPersone> contacts = [];
+    public ContactPersone? GetContactById(Guid id)
+    {
+        return contacts.FirstOrDefault(x => Guid.TryParse(x.Id, out var parsedId) && parsedId == id);
+    }
     private ContactPersone contact;
     private readonly IFileService _fileService = fileService;
 
@@ -24,8 +28,9 @@ public class ContactService(IFileService fileService) : IContactService
             !string.IsNullOrWhiteSpace(form.City))
         {
            
-            Contacts.Add(contact);
-            _fileService.SaveContactToFile(Contacts);
+            contacts.Add(contact);
+            _fileService.SaveContactToFile(contacts);
+            _fileService.LoadListFromFile();
             ContactListaUpdate?.Invoke(this, EventArgs.Empty);
             return true;
         }
@@ -34,24 +39,26 @@ public class ContactService(IFileService fileService) : IContactService
 
     public IEnumerable<ContactPersone> GetAllContacts()
     {
-        Contacts = _fileService.LoadListFromFile();
-        return Contacts;
+        contacts = _fileService.LoadListFromFile();
+        return contacts;
     }
-    public bool Update(ContactRegistrationForm newForm)
+    public bool Update(ContactRegistrationForm form)
     {
         
-        var contactInfo = Contacts.FirstOrDefault(x => x.Id == newForm.Id);
+        var existingContact = contacts.FirstOrDefault(x => x.Id == form.Id);
 
-        if (newForm != null && !string.IsNullOrWhiteSpace(newForm.FirstName) &&
-        !string.IsNullOrWhiteSpace(newForm.LastName) &&
-        !string.IsNullOrWhiteSpace(newForm.Email) &&
-        !string.IsNullOrWhiteSpace(newForm.PhoneNumber) &&
-        !string.IsNullOrWhiteSpace(newForm.StreetAddress) &&
-        !string.IsNullOrWhiteSpace(newForm.ZipCode) &&
-        !string.IsNullOrWhiteSpace(newForm.City))
+        if (existingContact != null)
         {
-            _fileService.SaveContactToFile(Contacts);
-
+            existingContact.FirstName = form.FirstName;
+            existingContact.LastName = form.LastName;
+            existingContact.Email = form.Email;
+            existingContact.PhoneNumber = form.PhoneNumber;
+            existingContact.StreetAddress = form.StreetAddress;
+            existingContact.ZipCode = form.ZipCode;
+            existingContact.City = form.City;
+        
+            _fileService.SaveContactToFile(contacts);
+            _fileService.LoadListFromFile();
             ContactListaUpdate?.Invoke(this, EventArgs.Empty);
             return true;
         }
@@ -59,14 +66,13 @@ public class ContactService(IFileService fileService) : IContactService
     }
     public bool RemoveContactFromList(ContactRegistrationForm form)
     {
-
-                    // Remove the contact from the list
-                    Contacts.Remove(contact);
-                    // Update the file
-                    _fileService.RemoveContactfromFile(Contacts);
-                    // Notify subscribers of update
-                    ContactListaUpdate?.Invoke(this, EventArgs.Empty);
+        // Remove the contact from the list
+        contacts.Remove(contact);
+        // Update the file
+        _fileService.RemoveContactfromFile(contacts);
+        // Notify subscribers of update
+        ContactListaUpdate?.Invoke(this, EventArgs.Empty);
        
-               return true;
+        return true;
     }
 }

@@ -6,6 +6,6 @@ namespace Business.Interfaces;
 public interface IContactService
 {
     bool AddContact(ContactRegistrationForm form);
-    IEnumerable<Contact> GetAllContacts();
-    bool RemoveContactFromList(ContactRegistrationForm form);
+    List<Contact> GetAllContacts();
+    //bool RemoveContactFromList(ContactRegistrationForm form);
 }

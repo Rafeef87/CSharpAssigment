@@ -1,13 +1,14 @@
 ﻿using Business.Factories;
 using Business.Interfaces;
 using Business.Models;
+using Business.Repositories;
 
 namespace Business.Services;
 //Build the main menu
-public class MenuService(IContactService contactService)
+public class MenuService(IContactRepository contactRepository) 
 {
-    private readonly IContactService _contactService = contactService;
-
+    private readonly IContactRepository _contactRepository = contactRepository;
+    public List<Contact> Contacts = [];
     //Show Menu
     public void ShowMenu()
     {
@@ -73,7 +74,7 @@ public class MenuService(IContactService contactService)
         Console.Write("ENTER YOUR LOCALITY: ");
         contactRegistrationForm.Locality = Console.ReadLine()!;
 
-        bool result = _contactService.AddContact(contactRegistrationForm);
+        bool result = _contactRepository.SaveToFile(Contacts);
         if (result)
             OutPutDialog("CONTACT WAS SUCCESSFULLY CREATED");
         else
@@ -86,13 +87,15 @@ public class MenuService(IContactService contactService)
     {
         Console.Clear();
         Console.WriteLine("-------- ALL CONTACTS -------");
-        IEnumerable<Contact> contacts = _contactService.GetAllContacts();
-        if (!contacts.Any())
+        var contacts = _contactRepository.GetFormFile();
+
+        if (contacts == null || !contacts.Any())
         {
-            Console.WriteLine("NO CONTACT FOUND. PRESS ANY KEY TO GO BACK");
+            Console.WriteLine("No contacts found. Press any key to go back.");
             Console.ReadKey();
             return;
         }
+
         foreach (var contact in contacts)
         {
             Console.WriteLine($"[{contact.Id},{contact.FirstName},{contact.LastName},{contact.Email},{contact.PhoneNumber},{ contact.StreetAddress},{contact.ZipCode},{ contact.Locality}]");

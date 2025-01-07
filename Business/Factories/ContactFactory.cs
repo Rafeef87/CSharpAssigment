@@ -11,28 +11,14 @@ public static class ContactFactory
     }
     public static Contact Create(BaseRegistrationForm registrationForm)
     {
-        try
+
+        return new Contact
         {
-            if (registrationForm is ContactRegistrationForm form)
-            { 
-                return new Contact
-                {
-                    FirstName = form.FirstName,
-                    LastName = form.LastName,
-                    Email = form.Email,
-                    PhoneNumber = form.PhoneNumber,
-                    StreetAddress = form.StreetAddress,
-                    ZipCode = form.ZipCode,
-                    Locality = form.Locality,
-                    IsRegistered = form.IsRegistered()
-                };
-            }
-            return null!; 
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"ERROR CREATING CONTACT {ex.Message}");
-            return null!;
-        }
+            FirstName = registrationForm.FirstName,
+            LastName = registrationForm.LastName,
+            Email = registrationForm.Email,
+            Locality = registrationForm.Locality,
+            IsRegistered = registrationForm.IsRegistered()
+        };
     }
 }

@@ -2,17 +2,13 @@
 using System.Text.Json;
 using Business.Interfaces;
 using Business.Models;
+using Business.Services;
 
 namespace Business.Repositories;
 
 public class ContactRepository : BaseRepository<Contact>, IContactRepository
 {
     private readonly IContactFileService _contactFileService;
-
-    public ContactRepository()
-    {
-        
-    }
 
     public ContactRepository(IContactFileService contactFileService)
     {

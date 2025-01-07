@@ -25,7 +25,6 @@ public class ContactService(IContactRepository contactRepository) : IContactServ
             if (contact != null && !string.IsNullOrWhiteSpace(contact.FirstName))
             {
                 Contacts.Add(contact);
-                // Convert the contact list to JSON and save it to the file
                 _contactRepository.SaveToFile(Contacts);
                 return true;
             }
@@ -34,15 +33,16 @@ public class ContactService(IContactRepository contactRepository) : IContactServ
         catch (Exception ex) 
         {
            Debug.WriteLine(ex.Message);
-            return false;
+           return false;
         }
     }
 
-    public IEnumerable<Contact> GetAllContacts()
+    public List<Contact> GetAllContacts()
     {
         Contacts = _contactRepository.GetFormFile()!;
         return Contacts;
     }
+    /*
     public bool RemoveContactFromList(ContactRegistrationForm form)
     {
         if (!string.IsNullOrWhiteSpace(form.FirstName))
@@ -56,5 +56,5 @@ public class ContactService(IContactRepository contactRepository) : IContactServ
             return false;
         }
         return false;
-    }
+    }*/
 }
