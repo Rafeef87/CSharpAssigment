@@ -90,7 +90,88 @@ public class ContactService_Test
         Assert.Equal(mockContacts, result); // Ensure the result matches the mock contacts
         _mockFileService.Verify(fs => fs.LoadListFromFile(), Times.Once); // Ensure LoadListFromFile was called once
     }
+    /* Detta är genererat av Chat GPT 4o - Denna kod testa Update contact Successfully */
+    [Fact]
+    public void GetContactById_ShouldReturnContact_WhenIdExists()
+    {
+        // Arrange
+        var contactId = Guid.NewGuid();
+        var contact = new ContactPersone
+        {
+            Id = contactId.ToString(),
+            FirstName = "John",
+            LastName = "Doe"
+        };
+        _contactService.contacts.Add(contact);
 
-    
+        // Act
+        var result = _contactService.GetContactById(contactId);
 
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(contactId.ToString(), result.Id);
+        Assert.Equal("John", result.FirstName);
+    }
+    [Fact]
+    public void Update_ShouldSuccessfully_UpdatesContact()
+    {
+        // Arrange
+        var contact = new ContactPersone
+        {
+            Id = Guid.NewGuid().ToString(),
+            FirstName = "John",
+            LastName = "Doe"
+        };
+        _contactService.contacts.Add(contact);
+
+        var updatedForm = new ContactRegistrationForm
+        {
+            Id = contact.Id,
+            FirstName = "Jane",
+            LastName = "Smith",
+            Email = "jane.smith@example.com",
+            PhoneNumber = "123456789",
+            StreetAddress = "123 Main St",
+            ZipCode = "12345",
+            City = "Metropolis"
+        };
+
+        // Act
+        var result = _contactService.Update(updatedForm);
+
+        // Assert
+        Assert.True(result);
+        Assert.Equal("Jane", contact.FirstName);
+        Assert.Equal("Smith", contact.LastName);
+        Assert.Equal("jane.smith@example.com", contact.Email);
+        _mockFileService.Verify(fs => fs.SaveContactToFile(It.IsAny<List<ContactPersone>>()), Times.Once);
+        _mockFileService.Verify(fs => fs.LoadListFromFile(), Times.Once);
+    }
+    [Fact]
+    public void Update_ShouldTriggerContactListaUpdateEvent_WhenContactIsUpdated()
+    {
+        // Arrange
+        var contact = new ContactPersone
+        {
+            Id = Guid.NewGuid().ToString(),
+            FirstName = "John"
+        };
+        _contactService.contacts.Add(contact);
+
+        var updatedForm = new ContactRegistrationForm
+        {
+            Id = contact.Id,
+            FirstName = "Jane"
+        };
+
+        bool eventTriggered = false;
+        _contactService.ContactListaUpdate += (sender, args) => eventTriggered = true;
+
+        // Act
+        var result = _contactService.Update(updatedForm);
+
+        // Assert
+        Assert.True(result);
+        Assert.True(eventTriggered);
+    }
 }
