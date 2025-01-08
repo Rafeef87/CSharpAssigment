@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Business.Helpers;
 using Business.Models;
 
 namespace Business.Factories;
@@ -14,6 +15,7 @@ public static class ContactFactory
 
         return new Contact
         {
+            Id= IdGenerator.GenerateUniqueId(),
             FirstName = registrationForm.FirstName,
             LastName = registrationForm.LastName,
             Email = registrationForm.Email,

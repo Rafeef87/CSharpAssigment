@@ -4,7 +4,17 @@ using Business.Models;
 namespace Business.Tests;
 
 public class ContactFactory_Test
-{ 
+{
+
+    [Fact]
+    public void Create_ShouldReturnContactRegistrationForm()
+    {
+        //Act
+        var result= ContactFactory.Create();
+        //Assert
+        Assert.NotNull(result);
+        Assert.IsType<ContactRegistrationForm>(result);
+    }
     [Fact]
     public void CreateContact_ShouldReturnNewContact()
     {

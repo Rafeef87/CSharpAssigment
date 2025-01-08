@@ -15,21 +15,16 @@ public class ContactRepository : BaseRepository<Contact>, IContactRepository
         _contactFileService = contactFileService;
 
     }
+    public List<Contact> contacts = [];
 
     // Get JSON from file and deserialize to a list
     public override List<Contact>? GetFormFile()
     {
-        try
-        {
+   
             string json = _contactFileService.LoadListFromFile();
             var list = Deserialize(json);
             return list;
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex.Message);
-            return null;
-        }
+        
     }
     // Save list as JSON string to file
     public override bool SaveToFile(List<Contact> list)

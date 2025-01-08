@@ -7,13 +7,15 @@ namespace Shared.Services;
 
 public class ContactService(IFileService fileService) : IContactService
 {
+    private readonly IFileService _fileService = fileService;
     public List<ContactPersone> contacts = [];
     public ContactPersone? GetContactById(Guid id)
     {
         return contacts.FirstOrDefault(x => Guid.TryParse(x.Id, out var parsedId) && parsedId == id);
     }
+
     private ContactPersone contact;
-    private readonly IFileService _fileService = fileService;
+    
 
     public event EventHandler? ContactListaUpdate;
     public bool AddContactToList(ContactRegistrationForm form)
@@ -66,13 +68,24 @@ public class ContactService(IFileService fileService) : IContactService
     }
     public bool RemoveContactFromList(ContactRegistrationForm form)
     {
-        // Remove the contact from the list
-        contacts.Remove(contact);
+        if (form == null)
+        {
+            return false;
+        }
+        var contactToRemove = contacts.FirstOrDefault(c => c.Id == form.Id);
+
+        if (contactToRemove != null)
+        {
+            // Remove the contact from the list
+            contacts.Remove(contactToRemove);
         // Update the file
         _fileService.RemoveContactfromFile(contacts);
         // Notify subscribers of update
         ContactListaUpdate?.Invoke(this, EventArgs.Empty);
        
         return true;
+        }
+
+        return false;
     }
 }

@@ -5,9 +5,9 @@ using Business.Repositories;
 
 namespace Business.Services;
 //Build the main menu
-public class MenuService(IContactRepository contactRepository) 
+public class MenuService(IContactService contactService) 
 {
-    private readonly IContactRepository _contactRepository = contactRepository;
+    private readonly IContactService _contactService = contactService;
     public List<Contact> Contacts = [];
     //Show Menu
     public void ShowMenu()
@@ -74,7 +74,7 @@ public class MenuService(IContactRepository contactRepository)
         Console.Write("ENTER YOUR LOCALITY: ");
         contactRegistrationForm.Locality = Console.ReadLine()!;
 
-        bool result = _contactRepository.SaveToFile(Contacts);
+        bool result = _contactService.AddContact(contactRegistrationForm);
         if (result)
             OutPutDialog("CONTACT WAS SUCCESSFULLY CREATED");
         else
@@ -87,14 +87,9 @@ public class MenuService(IContactRepository contactRepository)
     {
         Console.Clear();
         Console.WriteLine("-------- ALL CONTACTS -------");
-        var contacts = _contactRepository.GetFormFile();
+        var contacts = _contactService.GetAllContacts();
 
-        if (contacts == null || !contacts.Any())
-        {
-            Console.WriteLine("No contacts found. Press any key to go back.");
-            Console.ReadKey();
-            return;
-        }
+        
 
         foreach (var contact in contacts)
         {

@@ -42,7 +42,7 @@ public class ContactService(IContactRepository contactRepository) : IContactServ
         Contacts = _contactRepository.GetFormFile()!;
         return Contacts;
     }
-    /*
+  
     public bool RemoveContactFromList(ContactRegistrationForm form)
     {
         if (!string.IsNullOrWhiteSpace(form.FirstName))
@@ -56,5 +56,5 @@ public class ContactService(IContactRepository contactRepository) : IContactServ
             return false;
         }
         return false;
-    }*/
+    }
 }

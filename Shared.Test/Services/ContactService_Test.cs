@@ -174,4 +174,71 @@ public class ContactService_Test
         Assert.True(result);
         Assert.True(eventTriggered);
     }
+    /* Detta är genererat av Chat GPT 4o - Denna kod testa remove contact Successfully */
+    [Fact]
+    public void RemoveContactFromList_ShouldRemoveContact_WhenContactExists()
+    {
+        // Arrange
+        var contact = new ContactPersone
+        {
+            Id = Guid.NewGuid().ToString(),
+            FirstName = "John",
+            LastName = "Doe",
+            Email = "john.doe@example.com",
+            PhoneNumber = "1234567890",
+            StreetAddress = "123 Main St",
+            ZipCode = "12345",
+            City = "Cityville"
+        };
+        _contactService.contacts.Add(contact);
+
+        var contactForm = new ContactRegistrationForm
+        {
+            Id = contact.Id
+        };
+
+        // Act
+        var result = _contactService.RemoveContactFromList(contactForm);
+
+        // Assert
+        Assert.True(result);
+        
+        _mockFileService.Verify(fs => fs.RemoveContactfromFile(It.IsAny<List<ContactPersone>>()), Times.Once);
+    }
+
+    [Fact]
+    public void RemoveContactFromList_ShouldTriggerContactListaUpdateEvent_WhenContactIsRemoved()
+    {
+        // Arrange
+        var contact = new ContactPersone
+        {
+            Id = Guid.NewGuid().ToString(),
+            FirstName = "John"
+        };
+        _contactService.contacts.Add(contact);
+
+        var contactForm = new ContactRegistrationForm
+        {
+            Id = contact.Id
+        };
+
+        bool eventTriggered = false;
+        _contactService.ContactListaUpdate += (sender, args) => eventTriggered = true;
+
+        // Act
+        _contactService.RemoveContactFromList(contactForm);
+
+        // Assert
+        Assert.True(eventTriggered);
+    }
+    [Fact]
+    public void RemoveContactFromList_ShouldReturnFalse_WhenFormIsNull()
+    {
+        // Act
+        var result = _contactService.RemoveContactFromList(null);
+
+        // Assert
+        Assert.False(result);
+        _mockFileService.Verify(fs => fs.RemoveContactfromFile(It.IsAny<List<ContactPersone>>()), Times.Never);
+    }
 }

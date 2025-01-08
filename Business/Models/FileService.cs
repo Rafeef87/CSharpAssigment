@@ -40,7 +40,7 @@ public abstract class FileService : IFileService
 
     public virtual string LoadListFromFile()
     {
-            if (!File.Exists(_filePath))
+            if (File.Exists(_filePath))
             {
                 return File.ReadAllText(_filePath);
             }
