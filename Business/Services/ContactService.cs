@@ -13,6 +13,7 @@ public class ContactService(IContactRepository contactRepository) : IContactServ
 {
     
     private readonly IContactRepository _contactRepository = contactRepository;
+
     //Create a list of Contacts
     public List<Contact> Contacts { get; private set; } = [];
 

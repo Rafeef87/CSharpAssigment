@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace Business.Models;
 //Create a file service
-public abstract class FileService : IFileService
+public class FileService : IFileService
 {
     private readonly string _filePath;
     private readonly string _directoryPath;
