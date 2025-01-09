@@ -20,8 +20,8 @@ namespace Presention.MAUI.MainApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            builder.Services.AddSingleton<IFileService, FileService>();
             builder.Services.AddSingleton<ContactService>();
+            builder.Services.AddSingleton<FileService>();
             builder.Services.AddSingleton<ContactListViewModel>();
             builder.Services.AddSingleton<ContactListView>();
             builder.Services.AddSingleton<ContactAddViewModel>();
@@ -30,6 +30,7 @@ namespace Presention.MAUI.MainApp
             builder.Services.AddSingleton<ContactEditView>();
             builder.Services.AddSingleton<ContactDeletViewModel>();
             builder.Services.AddSingleton<ContactDeleteView>();
+
 
             return builder.Build();
         }

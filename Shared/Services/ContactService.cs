@@ -5,18 +5,16 @@ using Shared.Models;
 
 namespace Shared.Services;
 
-public class ContactService(IFileService fileService) : IContactService
+public class ContactService(FileService fileService)
 {
-    private readonly IFileService _fileService = fileService;
+    private readonly FileService _fileService = fileService;
     public List<ContactPersone> contacts = [];
+
+    
     public ContactPersone? GetContactById(Guid id)
     {
         return contacts.FirstOrDefault(x => Guid.TryParse(x.Id, out var parsedId) && parsedId == id);
     }
-
-    private ContactPersone contact;
-    
-
     public event EventHandler? ContactListaUpdate;
     public bool AddContactToList(ContactRegistrationForm form)
     {
@@ -29,19 +27,16 @@ public class ContactService(IFileService fileService) : IContactService
             !string.IsNullOrWhiteSpace(form.ZipCode) &&
             !string.IsNullOrWhiteSpace(form.City))
         {
-           
             contacts.Add(contact);
             _fileService.SaveContactToFile(contacts);
-            _fileService.LoadListFromFile();
             ContactListaUpdate?.Invoke(this, EventArgs.Empty);
             return true;
         }
         return false;
     }
-
     public IEnumerable<ContactPersone> GetAllContacts()
     {
-        
+        contacts = _fileService.LoadListFromFile();
         return contacts;
     }
     public bool Update(ContactRegistrationForm form)
@@ -58,9 +53,8 @@ public class ContactService(IFileService fileService) : IContactService
             existingContact.StreetAddress = form.StreetAddress;
             existingContact.ZipCode = form.ZipCode;
             existingContact.City = form.City;
-        
+
             _fileService.SaveContactToFile(contacts);
-            _fileService.LoadListFromFile();
             ContactListaUpdate?.Invoke(this, EventArgs.Empty);
             return true;
         }
@@ -72,20 +66,20 @@ public class ContactService(IFileService fileService) : IContactService
         {
             return false;
         }
-        var contactToRemove = contacts.FirstOrDefault(c => c.Id == form.Id);
+        var contactToRemove = contacts.FirstOrDefault(x => x.Id == form.Id);
 
         if (contactToRemove != null)
         {
             // Remove the contact from the list
             contacts.Remove(contactToRemove);
-        // Update the file
-        _fileService.RemoveContactfromFile(contacts);
-        // Notify subscribers of update
-        ContactListaUpdate?.Invoke(this, EventArgs.Empty);
-       
-        return true;
-        }
 
+            // Update the file
+            _fileService.SaveContactToFile(contacts);
+            // Notify subscribers of update
+            ContactListaUpdate?.Invoke(this, EventArgs.Empty);
+       
+            return true;
+        }
         return false;
     }
 }

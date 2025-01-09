@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Shared.Models;
@@ -12,17 +13,20 @@ namespace Presention.MAUI.MainApp.ViewModels;
 
     [ObservableProperty]
     private ContactRegistrationForm form;
+    [ObservableProperty]
+    private ObservableCollection<ContactPersone> contactList = new();
+
 
     [RelayCommand]
-    private async Task DeleteContact(ContactRegistrationForm form)
+    private async Task DeleteContact()
     {
-        
-            // Remove the contact from the service
-            _contactService.RemoveContactFromList(form);
-
+        if (Guid.TryParse(Form?.Id, out var contactId) && _contactService.GetContactById(contactId) != null)
+        {
+                // Remove the contact from the service
+                _contactService.RemoveContactFromList(Form);
+        }
             // Navigate back to the list after deletion
-            await Shell.Current.GoToAsync("///ContactListView");
-
+           await Shell.Current.GoToAsync("///ContactListView");
     }
     [RelayCommand]
     public async Task GoBack()

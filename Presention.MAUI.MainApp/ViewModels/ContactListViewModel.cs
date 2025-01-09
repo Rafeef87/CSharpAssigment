@@ -39,7 +39,7 @@ namespace Presention.MAUI.MainApp.ViewModels
         private async Task UpdateContactList(ContactPersone contact)
         {
             // Check if the contact exists in the list
-            var existingContact = contactList.FirstOrDefault(c => c.Id == contact.Id);
+            var existingContact = contactList.FirstOrDefault(x => x.Id == contact.Id);
 
             if (existingContact != null)
             {

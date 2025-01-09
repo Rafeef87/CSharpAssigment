@@ -8,13 +8,13 @@ namespace Shared.Test.Services;
 public class ContactService_Test
 {
     
-    private readonly Mock<IFileService> _mockFileService;
+    private readonly Mock<FileService> _mockFileService;
     private readonly ContactService _contactService;
 
     public ContactService_Test()
     {
         // Mock file service
-        _mockFileService = new Mock<IFileService>();
+        _mockFileService = new Mock<FileService>();
         _contactService = new ContactService(_mockFileService.Object);
     }
     /* Detta är genererat av Chat GPT 4o - Denna kod testa att kontact adding  Successfully*/

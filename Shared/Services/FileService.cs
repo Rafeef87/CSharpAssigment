@@ -5,7 +5,7 @@ using Shared.Models;
 
 namespace Shared.Services
 {
-    public class FileService : IFileService
+    public class FileService 
     {
         private readonly string _filePath;
         private readonly string _directoryPath;
@@ -16,7 +16,7 @@ namespace Shared.Services
             _filePath = Path.Combine(_directoryPath, fileName);
             _jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
         }
-        public void SaveContactToFile(List<ContactPersone> list)
+        public bool SaveContactToFile(List<ContactPersone> list)
         {
             try
             {
@@ -25,10 +25,12 @@ namespace Shared.Services
 
                 var json = JsonSerializer.Serialize(list, _jsonSerializerOptions);
                 File.WriteAllText(_filePath, json);
+                return true;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
+                return false;
             }
         }
         public List<ContactPersone> LoadListFromFile()
@@ -47,28 +49,6 @@ namespace Shared.Services
                 return [];
             }
         }
-
-        public bool RemoveContactfromFile(List<ContactPersone> list)
-        {
-            try
-            {
-                // If the list is empty or null, return false
-                if (list == null || !list.Any())
-                {
-                    return false;
-                }
-                // Save the updated list back to the file
-                SaveContactToFile(list);
-                LoadListFromFile();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                return false;
-            }
-        }
-
-        
+       
     }
 }
