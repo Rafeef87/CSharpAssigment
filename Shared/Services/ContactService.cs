@@ -41,7 +41,7 @@ public class ContactService(IFileService fileService) : IContactService
 
     public IEnumerable<ContactPersone> GetAllContacts()
     {
-        contacts = _fileService.LoadListFromFile();
+        
         return contacts;
     }
     public bool Update(ContactRegistrationForm form)
